@@ -1,0 +1,67 @@
+{% extends "predictor_app/base.html" %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4>📊 Financial Health Check</h4>
+            </div>
+            <div class="card-body">
+                {% if result %}
+                    <div class="text-center">
+                        <div class="display-1">{% if result.risk_score >= 70 %}🔴{% elif result.risk_score >= 30 %}🟡{% else %}🟢{% endif %}</div>
+                        <h2>{{ result.status }}</h2>
+                        <div class="progress mb-3" style="height: 25px;">
+                            <div class="progress-bar {% if result.risk_score >= 70 %}bg-danger{% elif result.risk_score >= 30 %}bg-warning{% else %}bg-success{% endif %}" style="width: {{ result.risk_score }}%">
+                                Risk Score: {{ result.risk_score }}/100
+                            </div>
+                        </div>
+                        <p><strong>Default Probability:</strong> {{ result.default_prob }}%</p>
+                        <p><strong>Debt-to-Income Ratio:</strong> {{ result.dti }}%</p>
+                        <hr>
+                        <h5>📋 Recommendations:</h5>
+                        <ul class="text-start">
+                            <li>✅ Pay all bills on time to avoid late fees</li>
+                            <li>💳 Keep credit card utilization below 30% of your limit</li>
+                            <li>🏦 Build an emergency fund of 3-6 months of expenses</li>
+                            <li>📉 If DTI > 36%, focus on paying down high-interest debt first</li>
+                        </ul>
+                        <a href="/analyze/" class="btn btn-primary mt-3">Analyze Again</a>
+                        <a href="/" class="btn btn-outline-secondary mt-3">Back to Home</a>
+                    </div>
+                {% else %}
+                    <p>Answer a few simple questions to get your personalized risk assessment.</p>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Personal Information</h5>
+                                {{ form.credit_score.label_tag }} {{ form.credit_score }}
+                                {{ form.age.label_tag }} {{ form.age }}
+                                {{ form.monthly_income.label_tag }} {{ form.monthly_income }}
+                                {{ form.savings.label_tag }} {{ form.savings }}
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Monthly Payments</h5>
+                                {{ form.rent.label_tag }} {{ form.rent }}
+                                {{ form.car_payment.label_tag }} {{ form.car_payment }}
+                                {{ form.credit_card_payment.label_tag }} {{ form.credit_card_payment }}
+                                {{ form.student_loan.label_tag }} {{ form.student_loan }}
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <h5>Credit Details</h5>
+                                {{ form.late_payments.label_tag }} {{ form.late_payments }}
+                                {{ form.credit_balance.label_tag }} {{ form.credit_balance }}
+                                {{ form.credit_limit.label_tag }} {{ form.credit_limit }}
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">Analyze My Risk →</button>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
