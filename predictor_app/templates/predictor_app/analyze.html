@@ -4,7 +4,7 @@
     <div class="col-md-8 mx-auto">
         <div class="card shadow">
             <div class="card-header bg-primary text-white">
-                <h4>📊 Financial Health Check</h4>
+                <h4>Financial Health Check</h4>
             </div>
             <div class="card-body">
                 {% if result %}
@@ -17,14 +17,13 @@
                             </div>
                         </div>
                         <p><strong>Default Probability:</strong> {{ result.default_prob }}%</p>
-                        <p><strong>Debt-to-Income Ratio:</strong> {{ result.dti }}%</p>
+                        <!-- <p><strong>Debt-to-Income Ratio:</strong> {{ result.dti }}%</p> -->
                         <hr>
-                        <h5>📋 Recommendations:</h5>
+                        <h5>Info:</h5>
                         <ul class="text-start">
-                            <li>✅ Pay all bills on time to avoid late fees</li>
-                            <li>💳 Keep credit card utilization below 30% of your limit</li>
-                            <li>🏦 Build an emergency fund of 3-6 months of expenses</li>
-                            <li>📉 If DTI > 36%, focus on paying down high-interest debt first</li>
+                            <li>Pay all bills on time</li>
+                            <li>Keep credit utilization below 30%</li>
+                            <li>Build emergency fund of 3-6 months of expenses</li>
                         </ul>
                         <a href="/analyze/" class="btn btn-primary mt-3">Analyze Again</a>
                         <a href="/" class="btn btn-outline-secondary mt-3">Back to Home</a>
@@ -33,31 +32,65 @@
                     <p>Answer a few simple questions to get your personalized risk assessment.</p>
                     <form method="post">
                         {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h5>Personal Information</h5>
-                                {{ form.credit_score.label_tag }} {{ form.credit_score }}
-                                {{ form.age.label_tag }} {{ form.age }}
-                                {{ form.monthly_income.label_tag }} {{ form.monthly_income }}
-                                {{ form.savings.label_tag }} {{ form.savings }}
-                            </div>
-                            <div class="col-md-6">
-                                <h5>Monthly Payments</h5>
-                                {{ form.rent.label_tag }} {{ form.rent }}
-                                {{ form.car_payment.label_tag }} {{ form.car_payment }}
-                                {{ form.credit_card_payment.label_tag }} {{ form.credit_card_payment }}
-                                {{ form.student_loan.label_tag }} {{ form.student_loan }}
-                            </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: inline-block; width: 200px;">Credit Score (300-850):</label>
+                            <input type="number" name="credit_score" value="680" style="width: 200px;" class="form-control d-inline-block">
                         </div>
-                        <div class="row mt-3">
-                            <div class="col-md-6">
-                                <h5>Credit Details</h5>
-                                {{ form.late_payments.label_tag }} {{ form.late_payments }}
-                                {{ form.credit_balance.label_tag }} {{ form.credit_balance }}
-                                {{ form.credit_limit.label_tag }} {{ form.credit_limit }}
-                            </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: inline-block; width: 200px;">Age:</label>
+                            <input type="number" name="age" value="35" style="width: 200px;" class="form-control d-inline-block">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">Analyze My Risk →</button>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: inline-block; width: 200px;">Monthly Income ($):</label>
+                            <input type="number" name="monthly_income" value="5000" style="width: 200px;" class="form-control d-inline-block">
+                        </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: inline-block; width: 200px;">Savings ($):</label>
+                            <input type="number" name="savings" value="10000" style="width: 200px;" class="form-control d-inline-block">
+                        </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: inline-block; width: 200px;">Rent or Mortgage ($):</label>
+                            <input type="number" name="rent" value="1500" style="width: 200px;" class="form-control d-inline-block">
+                        </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: inline-block; width: 200px;">Car Payment ($):</label>
+                            <input type="number" name="car_payment" value="400" style="width: 200px;" class="form-control d-inline-block">
+                        </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: inline-block; width: 200px;">Credit Card Payment ($):</label>
+                            <input type="number" name="credit_card_payment" value="300" style="width: 200px;" class="form-control d-inline-block">
+                        </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: inline-block; width: 200px;">Student Loan ($):</label>
+                            <input type="number" name="student_loan" value="200" style="width: 200px;" class="form-control d-inline-block">
+                        </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: inline-block; width: 200px;">Late Payments (last 2 years):</label>
+                            <input type="number" name="late_payments" value="0" style="width: 200px;" class="form-control d-inline-block">
+                        </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: inline-block; width: 200px;">Credit Card Balance ($):</label>
+                            <input type="number" name="credit_balance" value="3000" style="width: 200px;" class="form-control d-inline-block">
+                        </div>
+                        
+                        <div style="margin-bottom: 12px;">
+                            <label style="display: inline-block; width: 200px;">Credit Card Limit ($):</label>
+                            <input type="number" name="credit_limit" value="10000" style="width: 200px;" class="form-control d-inline-block">
+                        </div>
+                        
+                        <div style="margin-top: 30px;">
+                            <button type="submit" class="btn btn-primary w-100" style="padding: 12px; font-size: 16px;">Analyze My Risk →</button>
+                        </div>
                     </form>
                 {% endif %}
             </div>

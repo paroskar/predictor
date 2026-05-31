@@ -103,7 +103,7 @@ Federal Reserve Bank of New York. (2025). *Household debt and credit report (Q4 
 
 **Team IntelliRate AI**
 New England College
-Email: finshield@nec.edu
+Email: paroskar_gps@nec.edu
 
 ## License
 
